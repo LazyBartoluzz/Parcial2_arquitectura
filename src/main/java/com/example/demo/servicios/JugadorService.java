@@ -4,6 +4,7 @@ import com.example.demo.modelos.Jugador;
 import com.example.demo.repositorios.JugadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -13,33 +14,29 @@ public class JugadorService {
     @Autowired
     private JugadorRepository jugadorRepository;
 
-    // Obtener todos los jugadores
-    public List<Jugador> obtenerTodos() {
+    public List<Jugador> findAll() {
         return jugadorRepository.findAll();
     }
 
-    // Obtener jugador por ID
-    public Optional<Jugador> obtenerPorId(Long id) {
+    public Optional<Jugador> findById(Long id) {
         return jugadorRepository.findById(id);
     }
 
-    // Guardar jugador
-    public Jugador guardar(Jugador jugador) {
+    public Jugador save(Jugador jugador) {
         return jugadorRepository.save(jugador);
     }
 
-    // Eliminar jugador
-    public void eliminar(Long id) {
+    public void deleteById(Long id) {
         jugadorRepository.deleteById(id);
     }
 
-    // Obtener jugadores de un equipo específico
-    public List<Jugador> obtenerJugadoresPorEquipo(Long idEquipo) {
-        return jugadorRepository.findByEquipoId(idEquipo);
+    // Consulta 1: jugadores por equipo
+    public List<Jugador> findByEquipo(Long equipoId) {
+        return jugadorRepository.findJugadoresByEquipo(equipoId);
     }
 
-    // Obtener jugadores que han marcado más de X goles
-    public List<Jugador> obtenerJugadoresConGolesMayoresA(Integer goles) {
-        return jugadorRepository.findJugadoresConGolesMayoresA(goles);
+    // Consulta 2: jugadores con más de X goles
+    public List<Jugador> findJugadoresConMasDeGoles(Integer goles) {
+        return jugadorRepository.findJugadoresConMasDeGoles(goles);
     }
 }

@@ -3,45 +3,47 @@ package com.example.demo.controladores;
 import com.example.demo.modelos.Equipo;
 import com.example.demo.servicios.EquipoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/equipos")
+@RequestMapping("/api/equipos")
 public class EquipoController {
 
     @Autowired
     private EquipoService equipoService;
 
-    // Obtener todos los equipos
     @GetMapping
-    public List<Equipo> obtenerTodos() {
-        return equipoService.obtenerTodos();
+    public List<Equipo> getAll() {
+        return equipoService.findAll();
     }
 
-    // Obtener equipo por ID
     @GetMapping("/{id}")
-    public Optional<Equipo> obtenerPorId(@PathVariable Long id) {
-        return equipoService.obtenerPorId(id);
+    public ResponseEntity<Equipo> getById(@PathVariable Long id) {
+        return equipoService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    // Crear un nuevo equipo
     @PostMapping
-    public Equipo guardar(@RequestBody Equipo equipo) {
-        return equipoService.guardar(equipo);
+    public Equipo create(@RequestBody Equipo equipo) {
+        return equipoService.save(equipo);
     }
 
-    // Eliminar equipo por ID
+    @PutMapping("/{id}")
+    public ResponseEntity<Equipo> update(@PathVariable Long id, @RequestBody Equipo equipo) {
+        if (!equipoService.findById(id).isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        equipo.setId(id);
+        return ResponseEntity.ok(equipoService.save(equipo));
+    }
+
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) {
-        equipoService.eliminar(id);
-    }
-
-    // Obtener total de goles marcados por un equipo en todos sus partidos
-    @GetMapping("/{idEquipo}/total-goles")
-    public Integer obtenerTotalGolesPorEquipo(@PathVariable Long idEquipo) {
-        return equipoService.obtenerTotalGolesPorEquipo(idEquipo);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        equipoService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

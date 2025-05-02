@@ -4,6 +4,7 @@ import com.example.demo.modelos.EstadisticaJugador;
 import com.example.demo.repositorios.EstadisticaJugadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -11,25 +12,21 @@ import java.util.Optional;
 public class EstadisticaJugadorService {
 
     @Autowired
-    private EstadisticaJugadorRepository estadisticaJugadorRepository;
+    private EstadisticaJugadorRepository estadisticaRepository;
 
-    // Obtener todas las estadísticas de jugadores
-    public List<EstadisticaJugador> obtenerTodas() {
-        return estadisticaJugadorRepository.findAll();
+    public List<EstadisticaJugador> findAll() {
+        return estadisticaRepository.findAll();
     }
 
-    // Obtener estadística de jugador por ID
-    public Optional<EstadisticaJugador> obtenerPorId(Long id) {
-        return estadisticaJugadorRepository.findById(id);
+    public Optional<EstadisticaJugador> findById(Long id) {
+        return estadisticaRepository.findById(id);
     }
 
-    // Guardar estadística de jugador
-    public EstadisticaJugador guardar(EstadisticaJugador estadisticaJugador) {
-        return estadisticaJugadorRepository.save(estadisticaJugador);
+    public EstadisticaJugador save(EstadisticaJugador estadistica) {
+        return estadisticaRepository.save(estadistica);
     }
 
-    // Eliminar estadística de jugador
-    public void eliminar(Long id) {
-        estadisticaJugadorRepository.deleteById(id);
+    public void deleteById(Long id) {
+        estadisticaRepository.deleteById(id);
     }
 }

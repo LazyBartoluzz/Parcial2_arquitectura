@@ -9,5 +9,4 @@ public class ProyectoPostgresApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoPostgresApplication.class, args);
 	}
-
 }

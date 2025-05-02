@@ -4,6 +4,7 @@ import com.example.demo.modelos.Equipo;
 import com.example.demo.repositorios.EquipoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -13,28 +14,19 @@ public class EquipoService {
     @Autowired
     private EquipoRepository equipoRepository;
 
-    // Obtener todos los equipos
-    public List<Equipo> obtenerTodos() {
+    public List<Equipo> findAll() {
         return equipoRepository.findAll();
     }
 
-    // Obtener equipo por ID
-    public Optional<Equipo> obtenerPorId(Long id) {
+    public Optional<Equipo> findById(Long id) {
         return equipoRepository.findById(id);
     }
 
-    // Guardar equipo
-    public Equipo guardar(Equipo equipo) {
+    public Equipo save(Equipo equipo) {
         return equipoRepository.save(equipo);
     }
 
-    // Eliminar equipo
-    public void eliminar(Long id) {
+    public void deleteById(Long id) {
         equipoRepository.deleteById(id);
-    }
-
-    // Obtener total de goles marcados por un equipo en todos sus partidos
-    public Integer obtenerTotalGolesPorEquipo(Long idEquipo) {
-        return equipoRepository.obtenerTotalGolesPorEquipo(idEquipo);
     }
 }

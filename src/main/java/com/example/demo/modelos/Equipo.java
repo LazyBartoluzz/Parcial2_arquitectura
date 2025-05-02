@@ -3,6 +3,7 @@ package com.example.demo.modelos;
 import java.time.LocalDate;
 
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.persistence.*;
 
@@ -30,20 +31,25 @@ public class Equipo {
 
     //1 id equipo (local)
     @OneToMany
-    @JoinColumn(name = "id_equipo")
+    @JoinColumn(name = "id_equipo_local")
     private List<Partido> partidosLocales;
 
     //1 id equipo (visitante)
     @OneToMany
-    @JoinColumn(name = "id_equipo")
+    @JoinColumn(name = "id_equipo_visitante")
     private List<Partido> partidosVisitante;
 
-    @OneToMany
-    @JoinColumn(name = "id_equipo")
-    private List<Partido> partidos;
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Equipo equipo = (Equipo) o;
+        return Objects.equals(id, equipo.id);
+    }
 
-    //--------
-
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 
     public Long getId() {
         return id;
@@ -107,13 +113,5 @@ public class Equipo {
 
     public void setPartidosVisitante(List<Partido> partidosVisitante) {
         this.partidosVisitante = partidosVisitante;
-    }
-
-    public List<Partido> getPartidos() {
-        return partidos;
-    }
-
-    public void setPartidos(List<Partido> partidos) {
-        this.partidos = partidos;
     }
 }
